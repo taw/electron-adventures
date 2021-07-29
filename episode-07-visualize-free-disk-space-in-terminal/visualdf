@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+
+require "base64"
+
+def imgcat(data)
+  print [
+    "\e]1337;File=",
+    "size=#{data.size}",
+    ";inline=1",
+    ":",
+    Base64.strict_encode64(data),
+    "\a"
+  ].join
+end
+
+def df
+  `df -kP`
+    .lines[1..-1]
+    .map{|line| line.chomp.split(/\s+(?=[\d\/])/) }
+    .map{|_,total,used,_,_,path| [total.to_i, used.to_i, path]}
+end
+
+def generate_progress_bar(xsize, ysize, perc)
+  red = "\xFF\x40\x40".b
+  green = "\x40\xFF\x40".b
+  [
+    "P6\n".b,
+    "#{xsize} #{ysize}\n".b,
+    "255\n".b,
+    ysize.times.map{
+      xsize.times.map{|x| x > perc*xsize ? red : green}.join
+    }.join,
+  ].join
+end
+
+df.each do |total, used, path|
+  perc = used / total.to_f
+  perc = 0.0 if total == 0
+  data = generate_progress_bar(100, 20, perc)
+  imgcat(data)
+  printf " %3d%% %s\n", (100.0 * perc), path
+end

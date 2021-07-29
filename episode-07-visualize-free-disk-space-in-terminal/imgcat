@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require "base64"
+
+def imgcat(data)
+  print [
+    "\e]1337;File=",
+    "size=#{data.size}",
+    ";inline=1",
+    ":",
+    Base64.strict_encode64(data),
+    "\a",
+  ].join
+end
+
+unless ARGV.size == 1
+  puts "Usage: #{$0} <filename>"
+  exit 1
+end
+
+path = ARGV[0]
+data = open(path, "rb", &:read)
+imgcat(data)
+print "\n"
