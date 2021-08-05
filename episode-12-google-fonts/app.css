@@ -1,0 +1,58 @@
+@font-face {
+  font-family: 'Nova Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+       url('nova-mono-v13-latin-regular.woff2') format('woff2');
+}
+
+body {
+  background-color: #444;
+  color: #fff;
+}
+
+h1 {
+  font-family: Nova Mono, monospace;
+}
+
+#terminal {
+  font-family: Nova Mono, monospace;
+}
+
+.input-line {
+  display: flex;
+}
+
+.input-line > * {
+  flex: 1;
+}
+
+.input-line > .prompt {
+  flex: 0;
+  padding-right: 0.5rem;
+}
+
+.output {
+  padding-bottom: 0.5rem;
+}
+
+.input {
+  color: #ffa;
+}
+
+.output {
+  color: #afa;
+  white-space: pre;
+}
+
+form {
+  display: flex;
+}
+
+input {
+  flex: 1;
+  font-family: Nova Mono, monospace;
+  background-color: #444;
+  color: #fff;
+  border: none;
+}
