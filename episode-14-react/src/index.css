@@ -1,0 +1,43 @@
+body {
+  background-color: #444;
+  color: #fff;
+  font-family: monospace;
+}
+
+.input-line {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-line > * {
+  flex: 1;
+}
+
+.input-line > .prompt {
+  flex: 0;
+}
+
+.output {
+  padding-bottom: 0.5rem;
+}
+
+.input {
+  color: #ffa;
+}
+
+.output {
+  color: #afa;
+  white-space: pre;
+}
+
+form {
+  display: flex;
+}
+
+input {
+  flex: 1;
+  font-family: inherit;
+  background-color: inherit;
+  color: inherit;
+  border: none;
+}
