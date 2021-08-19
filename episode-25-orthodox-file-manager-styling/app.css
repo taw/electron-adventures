@@ -1,0 +1,52 @@
+body {
+  background-color: #226;
+  color: #fff;
+  font-family: monospace;
+  margin: 0;
+  font-size: 16px;
+}
+.ui {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "panel-left panel-right"
+    "footer footer";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+}
+.ui header {
+  grid-area: header;
+}
+.ui .panel-left {
+  grid-area: panel-left;
+}
+.ui .panel-right {
+  grid-area: panel-right;
+}
+.ui footer {
+  text-align: center;
+  grid-area: footer;
+}
+.ui .panel {
+  background: #338;
+  margin: 4px;
+}
+.panel .file.selected {
+  color: #ff2;
+  font-weight: bold;
+}
+.panel.active .file.focused {
+  background-color: #66b;
+}
+button {
+  font-family: inherit;
+  font-size: inherit;
+  background-color: #66b;
+  color: inherit;
+}
+header {
+  font-size: 24px;
+  margin: 4px;
+}
