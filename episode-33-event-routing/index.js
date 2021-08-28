@@ -1,11 +1,7 @@
 let { app, BrowserWindow } = require("electron")
 
 function createWindow() {
-  let win = new BrowserWindow({
-    webPreferences: {
-      preload: `${__dirname}/preload.js`,
-    },
-  })
+  let win = new BrowserWindow({})
   win.maximize()
   win.loadURL("http://localhost:5000/")
 }
