@@ -22,7 +22,7 @@
       eventBus.emit("activeBox", "paste")
     }
     if (key === "F10") {
-      eventBus.emit("activeBox", "quit")
+      eventBus.emit("app", "quit")
     }
   }
 </script>
