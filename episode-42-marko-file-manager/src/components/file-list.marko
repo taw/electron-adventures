@@ -1,0 +1,104 @@
+class {
+  onCreate(input) {
+    this.state = {
+      directory: input.initial,
+      id: input.id,
+      files: [],
+      focusedIdx: 0,
+      selected: [],
+    }
+  }
+  onMount() {
+    this.fetchFiles()
+  }
+  fetchFiles() {
+    let filesPromise = window.api.directoryContents(this.state.directory)
+    filesPromise.then(x => {
+      this.state.files = x
+    })
+  }
+  flipSelected(idx) {
+    if (this.state.selected.includes(idx)) {
+      this.state.selected = this.state.selected.filter(f => f !== idx)
+    } else {
+      this.state.selected = [...this.state.selected, idx]
+    }
+  }
+  enter() {
+    let focused = this.state.files[this.state.focusedIdx]
+    if (focused?.type === "directory") {
+      if (focused.name === "..") {
+        this.state.directory = this.state.directory.split("/").slice(0, -1).join("/") || "/"
+      } else {
+        this.state.directory += "/" + focused.name
+      }
+      this.fetchFiles()
+    }
+  }
+  click(idx) {
+    this.emit("activate")
+    this.state.focusedIdx = idx
+  }
+  rightclick(idx) {
+    this.emit("activate")
+    this.state.focusedIdx = idx
+    this.flipSelected(idx)
+  }
+  dblclick(idx) {
+    this.emit("activate")
+    this.state.focusedIdx = idx
+    this.enter()
+  }
+}
+
+<div class={panel: true, active: input.active}>
+  <header>${state.directory.split("/").slice(-1)[0]}</header>
+  <div class="file-list">
+    <for|file,idx| of=state.files>
+      <div
+        class={
+          file: "file",
+          focused: (idx === state.focusedIdx),
+          selected: state.selected.includes(idx),
+        }
+        on-click("click", idx)
+        on-contextmenu("rightclick", idx)
+        on-dblclick("dblclick", idx)
+        >${file.name}
+      </div>
+    </for>
+  </div>
+</div>
+
+<style>
+  .left {
+    grid-area: panel-left;
+  }
+  .right {
+    grid-area: panel-right;
+  }
+  .panel {
+    background: #338;
+    margin: 4px;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    text-align: center;
+    font-weight: bold;
+  }
+  .file-list {
+    flex: 1;
+    overflow-y: scroll;
+  }
+  .file {
+    cursor: pointer;
+  }
+  .file.selected {
+    color: #ff2;
+    font-weight: bold;
+  }
+  .panel.active .file.focused {
+    background-color: #66b;
+  }
+</style>

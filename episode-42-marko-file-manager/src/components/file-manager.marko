@@ -1,0 +1,63 @@
+class {
+  onCreate() {
+    this.state = {
+      cwd: null,
+      active: "left",
+    }
+  }
+  onMount() {
+    this.state.cwd = window.api.currentDirectory()
+  }
+  activate(panel) {
+    this.state.active = panel
+  }
+}
+
+<div class="ui">
+  <header>
+    File Manager
+  </header>
+  <if(state.cwd)>
+    <file-list
+      initial=(state.cwd)
+      id="left"
+      active=(state.active==="left")
+      on-activate("activate", "left")
+    />
+    <file-list
+      initial=(state.cwd + "/node_modules")
+      id="right"
+      active=(state.active==="right")
+      on-activate("activate", "right")
+    />
+  </if>
+  <buttons-footer />
+</div>
+
+<style>
+  body {
+    background-color: #226;
+    color: #fff;
+    font-family: monospace;
+    margin: 0;
+    font-size: 16px;
+  }
+  .ui {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-areas:
+      "header header"
+      "panel-left panel-right"
+      "footer footer";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+  .ui header {
+    grid-area: header;
+  }
+  header {
+    font-size: 24px;
+    margin: 4px;
+  }
+</style>
