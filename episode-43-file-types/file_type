@@ -1,0 +1,87 @@
+#!/usr/bin/env ruby
+
+require "pathname"
+
+class FileType
+  attr_reader :path
+
+  def initialize(path)
+    @path = Pathname(path)
+  end
+
+  def type_from_extension
+    case @path.extname.downcase
+    when ".png"
+      "image/png"
+    when ".jpg", ".jpeg"
+      "image/jpg"
+    when ".js", ".jsx"
+      "text/javascript"
+    when ".json", ".jsx"
+      "application/json"
+    when ".md"
+      "text/markdown"
+    when ".txt"
+      "text/plain"
+    end
+  end
+
+  def first_line
+    @first_line ||= @path.open(&:readline)
+  end
+
+  def interpretter
+    @interpretter ||= begin
+      parts = first_line[2..-1].split
+      command = parts[0].split("/").last
+      command = parts[1].split("/").last if command == "env"
+      command
+    end
+  end
+
+  def type_from_shebang
+    case interpretter
+    when /\Aruby/
+      "text/ruby"
+    when /\Apython/
+      "text/python"
+    when /\Anode/
+      "text/javascript"
+    when /\A(sh|bash)/
+      "text/bash"
+    when /\Aperl/
+      "text/perl"
+    else
+      "text/x-#{interpretter}"
+    end
+  end
+
+  def type_from_contents
+    if first_line[0, 2] == "#!"
+      type_from_shebang
+    else
+      `file -b --mime-type #{@path.to_s.shellescape}`.chomp.split.first
+    end
+  end
+
+  def base_type
+    return "inode/directory" if @path.directory?
+    type_from_extension or type_from_contents
+  end
+
+  def type
+    if @path.symlink?
+      "#{base_type} (symlink)"
+    else
+      base_type
+    end
+  end
+
+  def call
+    puts "#{path}: #{type}"
+  end
+end
+
+ARGV.each do |path|
+  FileType.new(path).call
+end
