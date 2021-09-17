@@ -1,0 +1,33 @@
+body {
+  background-color: #444;
+  color: #fff;
+  font-family: monospace;
+}
+
+.command {
+  width: 80em;
+  margin-bottom: 1em;
+}
+
+.command textarea {
+  min-height: 5em;
+  width: 100%;
+  background-color: #666;
+  color: #fff;
+  font: inherit;
+  border: none;
+  padding: 4px;
+  margin: 0;
+}
+
+.command .output {
+  width: 100%;
+  min-height: 5em;
+  background-color: #666;
+  padding: 4px;
+}
+
+button {
+  background-color: #666;
+  color: #fff;
+}
