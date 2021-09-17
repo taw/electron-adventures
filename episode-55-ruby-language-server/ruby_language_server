@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+
+require "sinatra"
+
+def capture_output(new_stdout, new_stderr)
+  begin
+    $stdout, save_stdout = new_stdout, $stdout
+    $stderr, save_stderr = new_stderr, $stderr
+    yield
+  ensure
+    $stdout = save_stdout
+    $stderr = save_stderr
+  end
+end
+
+def eval_and_capture_output(code, context)
+  response = {}
+  output = StringIO.new
+  capture_output(output, output) do
+    begin
+      eval(code, context)
+    rescue Exception => e
+      response["error"] = "#{e.class}: #{e.message}"
+    end
+  end
+  response["output"] = output.string
+  response
+end
+
+def new_binding
+  Object.new.instance_eval{ binding }
+end
+
+bindings = Hash.new{|h,k| h[k] = new_binding}
+
+post "/code" do
+  request.body.rewind
+  data = JSON.parse(request.body.read)
+  session_id = data["session_id"]
+  code = data["code"]
+  response = eval_and_capture_output(code, bindings[session_id])
+  response.to_json
+end
