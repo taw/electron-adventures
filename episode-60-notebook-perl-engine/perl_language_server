@@ -1,0 +1,24 @@
+#!/usr/bin/env perl
+
+use JSON;
+
+sub eval_and_capture {
+  my ($code) = @_;
+
+  my $output;
+  do {
+    local *STDOUT;
+    local *STDERR;
+    open STDOUT, ">>", \$output;
+    open STDERR, ">>", \$output;
+    eval($code);
+  };
+  encode_json({output => $output||"", error => $@});
+}
+
+while (<>) {
+  my $body = from_json($_);
+  my $result = eval_and_capture($body->{code});
+  print "$result\n";
+  flush STDOUT;
+}
