@@ -1,10 +1,10 @@
 <script>
   import Slice from "./Slice.svelte"
-	import { createEventDispatcher } from "svelte"
+  import { createEventDispatcher } from "svelte"
 
   export let data
 
-	let dispatch = createEventDispatcher()
+  let dispatch = createEventDispatcher()
   let slices
 
   $: {

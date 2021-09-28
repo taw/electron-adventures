@@ -1,8 +1,8 @@
 <script>
   import { printf } from "fast-printf"
-	import { createEventDispatcher } from "svelte"
+  import { createEventDispatcher } from "svelte"
 
-	let dispatch = createEventDispatcher()
+  let dispatch = createEventDispatcher()
 
   export let data
   export let offset
