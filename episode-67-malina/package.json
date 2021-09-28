@@ -1,0 +1,21 @@
+{
+  "name": "malina-app",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -cw",
+    "start": "npx derver --production public",
+    "surge": "cd public && npx surge"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^10.0.0",
+    "derver": "^0.4.19",
+    "electron": "^15.0.0",
+    "malinajs": "^0.6.43",
+    "rollup": "^2.56.3",
+    "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "sass": "^1.42.0"
+  }
+}
