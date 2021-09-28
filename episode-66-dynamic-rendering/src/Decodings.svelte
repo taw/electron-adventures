@@ -1,0 +1,67 @@
+<script>
+  export let data
+  export let offset
+
+  let int8, uint8, int16, uint16, int32, uint32, int64, uint64, float32, float64
+
+  $: bytesAvailable = data.length - offset
+
+  $: {
+    int8 = data.readInt8(offset)
+    uint8 = data.readUInt8(offset)
+
+    if (bytesAvailable >= 2) {
+      int16 = data.readInt16LE(offset)
+      uint16 = data.readUInt16LE(offset)
+    } else {
+      int16 = ""
+      uint16 = ""
+    }
+
+    if (bytesAvailable >= 4) {
+      int32 = data.readInt32LE(offset)
+      uint32 = data.readUInt32LE(offset)
+      float32 = data.readFloatLE(offset)
+    } else {
+      int32 = ""
+      uint32 = ""
+      float32 = ""
+    }
+
+    if (bytesAvailable >= 8) {
+      int64 = data.readBigInt64LE(offset)
+      uint64 = data.readBigUInt64LE(offset)
+      float64 = data.readDoubleLE(offset)
+    } else {
+      int64 = ""
+      uint64 = ""
+      float64 = ""
+    }
+  }
+</script>
+
+<table>
+  <tr><th>Type</th><th>Value</th></tr>
+  <tr><td>Int8</td><td>{int8}</td></tr>
+  <tr><td>UInt8</td><td>{uint8}</td></tr>
+  <tr><td>Int16</td><td>{int16}</td></tr>
+  <tr><td>UInt16</td><td>{uint16}</td></tr>
+  <tr><td>Int32</td><td>{int32}</td></tr>
+  <tr><td>UInt32</td><td>{uint32}</td></tr>
+  <tr><td>Int64</td><td>{int64}</td></tr>
+  <tr><td>UInt64</td><td>{uint64}</td></tr>
+  <tr><td>Float32</td><td>{float32}</td></tr>
+  <tr><td>Float64</td><td>{float64}</td></tr>
+</table>
+
+<style>
+  table {
+    margin-top: 8px;
+  }
+  th {
+    text-align: left;
+  }
+  tr:nth-child(even) {
+    background-color: #555;
+  }
+</style>
