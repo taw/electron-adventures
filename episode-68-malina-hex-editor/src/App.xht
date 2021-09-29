@@ -1,0 +1,44 @@
+<script>
+  import { Buffer } from "buffer/"
+  import MainView from "./MainView.xht"
+  import Decodings from "./Decodings.xht"
+  import StatusBar from "./StatusBar.xht"
+
+  let data = Buffer.from(window.api.data)
+  let offset = 0
+
+  let t0 = performance.now()
+  $tick(() => {
+    let t1 = performance.now()
+    console.log(`Loaded ${Math.round(data.length / 1024)}kB in ${t1 - t0}ms`)
+  })
+</script>
+
+<div class="editor">
+  <MainView {data} on:changeoffset={e => offset = e.detail}/>
+  <Decodings {data} {offset} />
+  <StatusBar {offset} />
+</div>
+
+<malina:head>
+  <title>fancy-data.bin</title>
+</malina:head>
+
+<style>
+  :global(body) {
+    background-color: #222;
+    color: #fff;
+    font-family: monospace;
+    padding: 0;
+    margin: 0;
+  }
+  .editor {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: auto;
+  }
+  :global(.editor > *) {
+    background-color: #444;
+  }
+</style>

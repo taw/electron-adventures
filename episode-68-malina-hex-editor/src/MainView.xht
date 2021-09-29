@@ -1,0 +1,55 @@
+<script>
+  import Slice from "./Slice.xht"
+
+  export let data
+
+  let slices
+  let main
+  let firstVisible = 0
+  let lastVisible = 200
+
+  slices = []
+  for (let i = 0; i < data.length; i += 16) {
+    slices.push({
+      offset: i,
+      data: data.slice(i, i + 16),
+    })
+  }
+
+  $: firstVisible, lastVisible, console.log("Visible:", firstVisible, lastVisible)
+
+  function onmouseover(e) {
+    if (!e.target.dataset.offset) {
+      return
+    }
+    $emit("changeoffset", e.target.dataset.offset)
+  }
+
+  function setVisible() {
+    let rowHeight = Math.max(10, main.scrollHeight / slices.length)
+    firstVisible = Math.floor(main.scrollTop / rowHeight)
+    lastVisible = Math.ceil((main.scrollTop + main.clientHeight) / rowHeight)
+  }
+</script>
+
+<div
+  class="main"
+  on:mouseover={onmouseover}
+  on:scroll={setVisible}
+  #main
+  use:setVisible
+>
+  {#each slices as slice, i}
+    <Slice {...slice} visible={i >= firstVisible && i <= lastVisible} />
+  {/each}
+</div>
+
+<malina:window on:resize={setVisible} />
+
+<style>
+  .main {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    width: 100%;
+  }
+</style>
