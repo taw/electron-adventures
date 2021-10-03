@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "build": "coffee -o public/build/ -c src",
+    "watch": "coffee -o public/build/ -cw src",
+    "electron": "electron ."
+  },
+  "devDependencies": {
+    "coffeescript": "^2.6.0",
+    "electron": "^15.1.0"
+  },
+  "main": "public/build/backend.js",
+  "dependencies": {
+    "phaser": "^3.55.2"
+  }
+}
