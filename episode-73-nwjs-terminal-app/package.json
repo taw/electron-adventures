@@ -1,0 +1,10 @@
+{
+  "name": "nwjs-app",
+  "main": "index.html",
+  "scripts": {
+    "start": "nw"
+  },
+  "devDependencies": {
+    "nw": "0.57.0-sdk"
+  }
+}
