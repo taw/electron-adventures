@@ -1,0 +1,35 @@
+{
+  "applicationId": "js.neutralino.sample",
+  "port": 0,
+  "defaultMode": "window",
+  "enableHTTPServer": true,
+  "enableNativeAPI": true,
+  "url": "/resources/",
+  "nativeBlockList": [],
+  "globalVariables": {
+    "TEST": "Test Value"
+  },
+  "modes": {
+    "window": {
+      "title": "episode-74-neutralino",
+      "width": 800,
+      "height": 500,
+      "minWidth": 400,
+      "minHeight": 250,
+      "fullScreen": false,
+      "alwaysOnTop": false,
+      "enableInspector": true,
+      "borderless": false,
+      "maximize": false
+    },
+    "browser": {},
+    "cloud": {}
+  },
+  "cli": {
+    "binaryName": "episode-74-neutralino",
+    "resourcesPath": "/resources/",
+    "clientLibrary": "/resources/js/neutralino.js",
+    "binaryVersion": "2.8.0",
+    "clientVersion": "1.5.0"
+  }
+}
