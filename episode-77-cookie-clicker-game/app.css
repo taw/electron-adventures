@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-image: url("cookie.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+}
+
+#score {
+  pointer-events: none;
+  user-select: none;
+  font-size: 36px;
+  font-family: fantasy;
+}
