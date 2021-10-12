@@ -7,8 +7,6 @@ function createWindow() {
     },
   })
   win.maximize()
-  console.log(process.env)
-  console.log("WOW")
   if (app.isPackaged) {
     win.loadFile(`${__dirname}/public/index.html`)
   } else {
