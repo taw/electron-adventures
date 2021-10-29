@@ -1,0 +1,25 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    array_include_methods (1.4.0)
+    color (1.8)
+    facets (3.1.0)
+    glimmer (2.4.0)
+      array_include_methods (~> 1.4.0)
+      facets (>= 3.1.0, < 4.0.0)
+    glimmer-dsl-libui (0.2.16)
+      color (~> 1.8)
+      glimmer (~> 2.4.0)
+      libui (~> 0.0.12)
+      os (>= 1.0.0, < 2.0.0)
+    libui (0.0.12)
+    os (1.1.1)
+
+PLATFORMS
+  x86_64-darwin-20
+
+DEPENDENCIES
+  glimmer-dsl-libui (~> 0.2.16)
+
+BUNDLED WITH
+   2.2.18

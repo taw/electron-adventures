@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby -J-XstartOnFirstThread
+
+require 'glimmer-dsl-swt'
+
+class CounterApp
+  include Glimmer::UI::CustomShell
+
+  attr_accessor :count
+
+  before_body do
+    @count = 0
+  end
+
+  body {
+    shell {
+      text "Hello, Button!"
+      row_layout :vertical
+
+      label {
+        text <= [self, :count, on_read: lambda{|v| "Count: #{v}" }]
+      }
+
+      group {
+        row_layout :horizontal
+
+        button {
+          text "+1"
+          on_widget_selected { self.count += 1 }
+        }
+
+        button {
+          text "-1"
+          on_widget_selected { self.count -= 1 }
+        }
+      }
+    }
+  }
+end
+
+CounterApp.launch

@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require "glimmer-dsl-libui"
+
+include Glimmer
+
+window("Hello, world!", 800, 600).show
