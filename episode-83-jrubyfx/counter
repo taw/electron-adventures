@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require "jrubyfx"
+
+class Counter < JRubyFX::Application
+  def start(stage)
+    count = 0
+
+    with(stage, width: 300, height: 300, title: "Counter App") do
+      layout_scene do
+        vbox do
+          count_label = label("Count: #{count}")
+          hbox do
+            button("+1").set_on_action {
+              count += 1
+              count_label.text = "Count: #{count}"
+            }
+            button("-1").set_on_action {
+              count -= 1
+              count_label.text = "Count: #{count}"
+            }
+          end
+        end
+      end
+      show
+    end
+  end
+end
+
+Counter.launch
