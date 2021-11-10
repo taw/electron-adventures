@@ -1,0 +1,7 @@
+require "pathname"
+
+desc "Build JavaScript files"
+task "build" do
+  Pathname("public/build").mkpath
+  sh "opal src/app.rb -c >public/build/app.js"
+end

@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  background-color: #444;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 300%;
+  min-height: 100vh;
+}
+
+button {
+  font-size: unset;
+}
