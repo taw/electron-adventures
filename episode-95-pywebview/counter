@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+
+import webview
+
+class App:
+  def __init__(self):
+    self.counter = 0
+
+  def click(self):
+    print("Clicked!")
+    self.counter += 1
+
+  def getCount(self):
+    return self.counter
+
+app = App()
+
+window = webview.create_window(
+  "Click Counter",
+  "counter.html",
+  js_api=App()
+)
+webview.start()
