@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require "ferrum"
+
+browser = Ferrum::Browser.new
+pp browser.client.command("Browser.getVersion")
+browser.quit

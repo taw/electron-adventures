@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require "ferrum"
+
+browser = Ferrum::Browser.new(headless: false)
+browser.go_to("https://en.wikipedia.org")
+
+input = browser.at_css("input[name=search]")
+input.focus.type("bengal tiger", :Enter)
+
+loop do
+  sleep 60
+end

@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require "ferrum"
+
+browser = Ferrum::Browser.new(
+  headless: false
+)
+browser.go_to("https://en.wikipedia.org/wiki/Cat")
+
+loop do
+  sleep 60
+end

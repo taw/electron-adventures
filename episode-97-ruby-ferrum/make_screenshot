@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require "ferrum"
+
+browser = Ferrum::Browser.new
+browser.go_to("https://en.wikipedia.org/wiki/Cat")
+browser.screenshot(path: "cat.png")
+browser.quit
