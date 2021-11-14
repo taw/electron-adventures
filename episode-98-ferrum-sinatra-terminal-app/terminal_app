@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby
+
+require "ferrum"
+require "sinatra"
+require "open-uri"
+require "open3"
+require "sinatra/json"
+require "rack/contrib"
+
+APP_URL = "http://localhost:4567"
+SECRET_TOKEN = Random.alphanumeric(64)
+
+enable :sessions
+
+use Rack::JSONBodyParser
+
+get "/ping" do
+  "pong"
+end
+
+get "/start" do
+  raise "Invalid token" unless params["token"] == SECRET_TOKEN
+  session["token"] = params["token"]
+  redirect "/index.html"
+end
+
+post "/execute" do
+  raise "Invalid token" unless session["token"] == SECRET_TOKEN
+  command = params["command"]
+  # \n to force Ruby to go through shell even when it thinks it doesn't need to
+  output, status = Open3.capture2e("\n"+command)
+  json output: output
+end
+
+def wait_for_url(url, response)
+  loop do
+    begin
+      sleep 1
+      break if URI.open(url).read == response
+    rescue
+    end
+  end
+end
+
+Thread.new do
+  wait_for_url "#{APP_URL}/ping", "pong"
+  $browser = Ferrum::Browser.new(
+    headless: false,
+    browser_options: {
+      "app" => "#{APP_URL}/start?token=#{SECRET_TOKEN}",
+    },
+  )
+  puts "#{APP_URL}/start?token=#{SECRET_TOKEN}"
+end
